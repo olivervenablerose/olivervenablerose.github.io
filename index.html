@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oliver — Materials Science Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #FDFBD4;
+      --accent-dim: rgba(253, 251, 212, 0.08);
+      --accent-border: rgba(253, 251, 212, 0.2);
+      --accent-glow: rgba(253, 251, 212, 0.06);
+      --bg: #111111;
+      --bg2: #181818;
+      --bg3: #202020;
+      --bg4: #282828;
+      --text: #ede9e0;
+      --text-muted: #6b6b65;
+      --text-sub: #9b9990;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-hover: rgba(253, 251, 212, 0.18);
+      --radius: 10px;
+      --radius-lg: 14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2.5rem;
+      height: 56px;
+      background: rgba(17, 17, 17, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .nav-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 6rem 2.5rem 5rem;
+      max-width: 900px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100px;
+      width: 500px;
+      height: 400px;
+      background: radial-gradient(ellipse at 30% 40%, rgba(253,251,212,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 54px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    .hero-bio {
+      font-size: 15px;
+      color: var(--text-sub);
+      line-height: 1.85;
+      max-width: 580px;
+      margin-bottom: 2rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--accent);
+      border: 0.5px solid var(--accent-border);
+      background: var(--accent-dim);
+      padding: 5px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+      opacity: 0.9;
+    }
+
+    /* ── SECTION SHARED ── */
+    .section-rule {
+      height: 0.5px;
+      background: var(--border);
+      margin: 0 2.5rem;
+    }
+
+    .section {
+      padding: 4rem 2.5rem;
+    }
+
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.6;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── GALLERY ── */
+    .technique-block {
+      margin-bottom: 3.5rem;
+    }
+
+    .technique-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 1.25rem;
+    }
+
+    .technique-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+
+    .technique-abbr {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .technique-rule {
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .technique-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .img-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .img-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+    }
+
+    .img-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: var(--bg3);
+    }
+
+    .img-card-body {
+      padding: 10px 12px 12px;
+    }
+
+    .img-card-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .img-card-caption {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* placeholder card */
+    .img-placeholder {
+      background: var(--bg2);
+      border: 0.5px dashed var(--accent-border);
+      border-radius: var(--radius);
+      aspect-ratio: 4 / 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: default;
+    }
+
+    .img-placeholder svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--accent);
+      opacity: 0.35;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .img-placeholder span {
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.55;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-inner {
+      max-width: 860px;
+      width: 100%;
+    }
+
+    .lightbox-inner img {
+      width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: var(--radius);
+      display: block;
+    }
+
+    .lightbox-caption {
+      margin-top: 1rem;
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: 0.5px solid var(--border-hover);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .lightbox-close:hover { color: var(--text); border-color: var(--accent); }
+
+    /* ── PUBLICATION ── */
+    .pub-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      max-width: 700px;
+      transition: border-color 0.25s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .pub-card:hover { border-color: var(--border-hover); }
+
+    .pub-journal {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      opacity: 0.7;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .pub-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.45;
+      margin-bottom: 0.6rem;
+    }
+
+    .pub-authors {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .pub-authors strong {
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    .pub-link-row {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--accent);
+      opacity: 0.7;
+    }
+
+    .pub-link-row svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── BIO ── */
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 680px;
+    }
+
+    .bio-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .bio-card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .bio-card-value {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .bio-body {
+      font-size: 15px;
+      color: var(--text-sub);
+      line-height: 1.9;
+      max-width: 620px;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      max-width: 560px;
+    }
+
+    .contact-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--border-hover);
+      background: var(--accent-glow);
+    }
+
+    .contact-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-dim);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-icon svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.8;
+    }
+
+    .contact-card-label { font-size: 13px; font-weight: 500; }
+    .contact-card-sub { font-size: 12px; color: var(--text-muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      .hero { padding: 3.5rem 1.25rem 3rem; }
+      .section { padding: 3rem 1.25rem; }
+      .section-rule { margin: 0 1.25rem; }
+      .bio-grid { grid-template-columns: 1fr; }
+      footer { padding: 1.25rem; flex-direction: column; gap: 0.75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .img-card, .contact-card, .pub-card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-name">Oliver · M.S. Chemistry</span>
+    <ul class="nav-links">
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#publication">Publication</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <p class="hero-eyebrow">Materials Science · Polymer Research</p>
+    <h1>Characterization<br>through <em>careful</em> science.</h1>
+    <p class="hero-bio">
+      M.S. Chemistry — materials science focus — with 4+ years in polymer design, degradation
+      analysis, and multi-technique characterization. First-author publication in the
+      Journal of Polymer Science.
+    </p>
+    <div class="badge-row">
+      <span class="badge">DSC · TGA · DMA</span>
+      <span class="badge">SEM · AFM · Optical</span>
+      <span class="badge">FTIR · NMR · GC-MS</span>
+      <span class="badge">Rheology</span>
+      <span class="badge">XRD</span>
+      <span class="badge">UTM · ASTM</span>
+    </div>
+  </header>
+
+  <div class="section-rule"></div>
+
+  <!-- GALLERY -->
+  <section class="section" id="gallery">
+    <p class="section-eyebrow">Characterization gallery</p>
+
+    <!-- DSC / TGA / DMA -->
+    <div class="technique-block">
+      <div class="technique-header">
+        <span class="technique-name">Thermal analysis</span>
+        <span class="technique-abbr">DSC · TGA · DMA</span>
+        <div class="technique-rule"></div>
+        <span class="technique-count">— images</span>
+      </div>
+      <div class="img-grid" id="grid-thermal">
+        <!--
+          HOW TO ADD IMAGES:
+          1. Place your image files in an /images/ folder in your repository.
+          2. Copy and paste the block below for each image, updating src, alt, title, and caption.
+
+          <a class="img-card" href="images/your-image.png" onclick="openLightbox(event, 'images/your-image.png', 'Your caption text here.')">
+            <img src="images/your-image.png" alt="Brief description of image" loading="lazy" />
+            <div class="img-card-body">
+              <p class="img-card-title">Short title</p>
+              <p class="img-card-caption">Brief technical caption.</p>
+            </div>
+          </a>
+        -->
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add DSC · TGA · DMA images</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add DSC · TGA · DMA images</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add DSC · TGA · DMA images</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEM / AFM / Optical -->
+    <div class="technique-block">
+      <div class="technique-header">
+        <span class="technique-name">Microscopy</span>
+        <span class="technique-abbr">SEM · AFM · Optical</span>
+        <div class="technique-rule"></div>
+        <span class="technique-count">— images</span>
+      </div>
+      <div class="img-grid" id="grid-microscopy">
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add SEM · AFM · Optical images</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add SEM · AFM · Optical images</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add SEM · AFM · Optical images</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rheology -->
+    <div class="technique-block">
+      <div class="technique-header">
+        <span class="technique-name">Rheology</span>
+        <div class="technique-rule"></div>
+        <span class="technique-count">— images</span>
+      </div>
+      <div class="img-grid" id="grid-rheology">
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add rheology graphs</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add rheology graphs</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add rheology graphs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- XRD -->
+    <div class="technique-block">
+      <div class="technique-header">
+        <span class="technique-name">Structural analysis</span>
+        <span class="technique-abbr">XRD</span>
+        <div class="technique-rule"></div>
+        <span class="technique-count">— images</span>
+      </div>
+      <div class="img-grid" id="grid-xrd">
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add XRD patterns</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add XRD patterns</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add XRD patterns</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- UTM / ASTM -->
+    <div class="technique-block">
+      <div class="technique-header">
+        <span class="technique-name">Mechanical testing</span>
+        <span class="technique-abbr">UTM · ASTM</span>
+        <div class="technique-rule"></div>
+        <span class="technique-count">— images</span>
+      </div>
+      <div class="img-grid" id="grid-mechanical">
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add mechanical testing data</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add mechanical testing data</span>
+        </div>
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Add mechanical testing data</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- PUBLICATION -->
+  <section class="section" id="publication">
+    <p class="section-eyebrow">Publication</p>
+    <!--
+      UPDATE THIS CARD:
+      Replace the href, journal name, article title, and author list with your real publication details.
+    -->
+    <a class="pub-card" href="https://doi.org/YOUR_DOI_HERE" target="_blank" rel="noopener">
+      <p class="pub-journal">Journal of Polymer Science</p>
+      <p class="pub-title">
+        Your Article Title Goes Here — Replace with the Real Title of Your Publication
+      </p>
+      <p class="pub-authors">
+        <strong>Your Name</strong>, Co-author Name, Co-author Name · Year
+      </p>
+      <div class="pub-link-row">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on publisher site
+      </div>
+    </a>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- ABOUT / BIO -->
+  <section class="section" id="about">
+    <p class="section-eyebrow">About</p>
+    <!--
+      UPDATE THIS SECTION:
+      Replace the placeholder bio and detail cards with your real information.
+    -->
+    <p class="bio-body">
+      Your bio goes here. Describe your research focus, what drives you scientifically, and what
+      kinds of problems you are most interested in solving. This is a good place to connect
+      your technical background to the kinds of roles you are targeting — aerospace, space,
+      and energy sectors. Keep it 3–5 sentences: specific, grounded, and in your own voice.
+    </p>
+    <div class="bio-grid">
+      <div class="bio-card">
+        <p class="bio-card-label">Degree</p>
+        <p class="bio-card-value">M.S. Chemistry<br>Materials Science focus</p>
+      </div>
+      <div class="bio-card">
+        <p class="bio-card-label">Experience</p>
+        <p class="bio-card-value">4+ years polymer research</p>
+      </div>
+      <div class="bio-card">
+        <p class="bio-card-label">Specialization</p>
+        <p class="bio-card-value">Polymer design &amp; degradation characterization</p>
+      </div>
+      <div class="bio-card">
+        <p class="bio-card-label">Sectors of interest</p>
+        <p class="bio-card-value">Aerospace · Space · Energy</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <p class="section-eyebrow">Contact</p>
+    <!--
+      UPDATE THESE LINKS:
+      Replace href values and display text with your real email, LinkedIn, GitHub, and DOI.
+    -->
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:your@email.com">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <p class="contact-card-label">Email</p>
+          <p class="contact-card-sub">your@email.com</p>
+        </div>
+      </a>
+      <a class="contact-card" href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div>
+          <p class="contact-card-label">LinkedIn</p>
+          <p class="contact-card-sub">linkedin.com/in/you</p>
+        </div>
+      </a>
+      <a class="contact-card" href="https://github.com/yourusername" target="_blank" rel="noopener">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        </div>
+        <div>
+          <p class="contact-card-label">GitHub</p>
+          <p class="contact-card-sub">github.com/you</p>
+        </div>
+      </a>
+      <a class="contact-card" href="https://doi.org/YOUR_DOI_HERE" target="_blank" rel="noopener">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div>
+          <p class="contact-card-label">Publication</p>
+          <p class="contact-card-sub">J. Polymer Science</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>Oliver · Materials Science Portfolio</span>
+    <div class="footer-dot"></div>
+    <span>Built with GitHub Pages</span>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close image viewer">&#x2715;</button>
+    <div class="lightbox-inner">
+      <img id="lightbox-img" src="" alt="" />
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <script>
+    function openLightbox(e, src, caption) {
+      e.preventDefault();
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-img').alt = caption;
+      document.getElementById('lightbox-caption').textContent = caption;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>
