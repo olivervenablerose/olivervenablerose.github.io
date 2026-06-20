@@ -246,16 +246,17 @@
       gap: 10px;
     }
 
-    /* ── IMAGE CARD ── */
+    /* ── IMAGE CARD — white image area, dark caption fills remaining height ── */
     .img-card {
-      background: #ffffff;
+      background: var(--bg2);
       border: 0.5px solid rgba(255,255,255,0.12);
       border-radius: var(--radius);
       overflow: hidden;
       transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
       cursor: pointer;
       text-decoration: none;
-      display: block;
+      display: flex;
+      flex-direction: column;
     }
 
     .img-card:hover {
@@ -271,12 +272,14 @@
       display: block;
       background: #ffffff;
       padding: 8px;
+      flex-shrink: 0;
     }
 
     .img-card-body {
       background: var(--bg2);
       padding: 10px 12px 12px;
       border-top: 0.5px solid rgba(255,255,255,0.06);
+      flex: 1;
     }
 
     .img-card-title {
@@ -411,12 +414,24 @@
       stroke-linejoin: round;
     }
 
-    /* ── BIO ── */
+    /* ── ABOUT — side by side layout ── */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .bio-body {
+      font-size: 15px;
+      color: var(--text-sub);
+      line-height: 1.9;
+    }
+
     .bio-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      max-width: 680px;
     }
 
     .bio-card {
@@ -444,14 +459,6 @@
       line-height: 1.5;
     }
 
-    .bio-body {
-      font-size: 15px;
-      color: var(--text-sub);
-      line-height: 1.9;
-      max-width: 620px;
-      margin-bottom: 2rem;
-    }
-
     /* ── CONTACT ── */
     .contact-grid {
       display: grid;
@@ -471,6 +478,7 @@
       text-decoration: none;
       color: var(--text);
       transition: border-color 0.2s, background 0.2s;
+      min-width: 0;
     }
 
     .contact-card:hover {
@@ -500,8 +508,13 @@
       opacity: 0.8;
     }
 
+    .contact-text { min-width: 0; }
     .contact-card-label { font-size: 13px; font-weight: 500; }
-    .contact-card-sub { font-size: 12px; color: var(--text-muted); }
+    .contact-card-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -528,13 +541,16 @@
     }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
     @media (max-width: 640px) {
       nav { padding: 0 1.25rem; }
       .nav-links { gap: 1.25rem; }
       .hero { padding: 3.5rem 1.25rem 3rem; }
       .section { padding: 3rem 1.25rem; }
       .section-rule { margin: 0 1.25rem; }
-      .bio-grid { grid-template-columns: 1fr; }
       footer { padding: 1.25rem; flex-direction: column; gap: 0.75rem; }
     }
 
@@ -595,7 +611,7 @@
 
         <a class="img-card" href="images/DegredationDSC.png"
            onclick="openLightbox(event, 'images/DegredationDSC.png', 'DSC — Selective polymerization via volatile off-gassing. Thermal degradation drives loss of small molecule components, promoting supramolecular polymer formation and crystalline domain development. Endothermic transitions reflect the onset of morphological reorganization.')">
-          <img src="images/DegredationDSC.png" alt="DSC of selectively polymerized material showing off-gassing and crystalline domain formation" loading="lazy" />
+          <img src="images/DegredationDSC.png" alt="DSC of selectively polymerized material" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Degradation DSC</p>
             <p class="img-card-caption">Volatile off-gassing drives supramolecular polymerization and crystalline domain formation.</p>
@@ -604,7 +620,7 @@
 
         <a class="img-card" href="images/DSCOverlay.png"
            onclick="openLightbox(event, 'images/DSCOverlay.png', 'DSC overlay — Mixed morphology supramolecular polymers. Small molecules function as architectural levers, enabling systematic tuning of crystallinity and melt transitions across a compositional series. Shifts in Tm reflect stoichiometric control over polymer morphology.')">
-          <img src="images/DSCOverlay.png" alt="DSC overlay of mixed morphology supramolecular polymers showing tunable morphology" loading="lazy" />
+          <img src="images/DSCOverlay.png" alt="DSC overlay of mixed morphology supramolecular polymers" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">DSC Overlay</p>
             <p class="img-card-caption">Small molecules as architectural levers enabling tunable crystallinity across a compositional series.</p>
@@ -613,7 +629,7 @@
 
         <a class="img-card" href="images/TGAOverlay.png"
            onclick="openLightbox(event, 'images/TGAOverlay.png', 'TGA overlay — Degradable polymer series. Multiple mass loss events are resolved and assigned to discrete functional group decomposition, confirming structural integrity of each polymer component and enabling quantitative composition analysis.')">
-          <img src="images/TGAOverlay.png" alt="TGA overlay of degradable polymers showing multiple mass loss events" loading="lazy" />
+          <img src="images/TGAOverlay.png" alt="TGA overlay of degradable polymers" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">TGA Overlay</p>
             <p class="img-card-caption">Multiple mass loss events assigned to discrete functional group decomposition across the polymer series.</p>
@@ -636,7 +652,7 @@
         <!-- AFM -->
         <a class="img-card" href="images/AFMCrystallineDonuts.jpg"
            onclick="openLightbox(event, 'images/AFMCrystallineDonuts.jpg', 'AFM phase and height — Semicrystalline degradable polymer. Simultaneous phase and height imaging resolves evenly dispersed crystalline domains distributed throughout an amorphous matrix, characteristic of controlled supramolecular assembly.')">
-          <img src="images/AFMCrystallineDonuts.jpg" alt="AFM phase and height images showing crystalline domains in semicrystalline degradable polymer" loading="lazy" />
+          <img src="images/AFMCrystallineDonuts.jpg" alt="AFM phase and height images showing crystalline domains" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">AFM — Crystalline Domains</p>
             <p class="img-card-caption">Evenly dispersed crystalline domains in an amorphous matrix, resolved by simultaneous phase and height imaging.</p>
@@ -645,7 +661,7 @@
 
         <a class="img-card" href="images/AFMHeightPhase.jpg"
            onclick="openLightbox(event, 'images/AFMHeightPhase.jpg', 'AFM phase and height — Semicrystalline degradable polymer. Images capture the formation of a discrete crystalline domain, revealing the nanoscale polymer interactions driving supramolecular organization and phase segregation.')">
-          <img src="images/AFMHeightPhase.jpg" alt="AFM phase and height images showing crystalline domain formation in semicrystalline polymer" loading="lazy" />
+          <img src="images/AFMHeightPhase.jpg" alt="AFM phase and height images showing crystalline domain formation" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">AFM — Domain Formation</p>
             <p class="img-card-caption">Nanoscale polymer interactions driving crystalline domain nucleation and supramolecular phase segregation.</p>
@@ -664,7 +680,7 @@
         <!-- Optical -->
         <a class="img-card" href="images/AmorphousOptical.jpg"
            onclick="openLightbox(event, 'images/AmorphousOptical.jpg', 'Polarized optical microscopy — Amorphous degradable polymer adhesive. Absence of birefringence under crossed polarizers confirms fully amorphous morphology, establishing a baseline for comparison with semicrystalline and mixed morphology variants.')">
-          <img src="images/AmorphousOptical.jpg" alt="Optical microscopy of amorphous degradable polymer showing no birefringence" loading="lazy" />
+          <img src="images/AmorphousOptical.jpg" alt="Optical microscopy of amorphous degradable polymer" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Optical — Amorphous Morphology</p>
             <p class="img-card-caption">Absence of birefringence under crossed polarizers confirms fully amorphous character in degradable adhesive.</p>
@@ -673,7 +689,7 @@
 
         <a class="img-card" href="images/Optical1stHeat.jpg"
            onclick="openLightbox(event, 'images/Optical1stHeat.jpg', 'Polarized optical microscopy — Degradable polymer under first heating cycle. Loss of birefringence tracks the dissipation of crystalline domains above Tm, providing direct visual confirmation of melt behavior corroborated by DSC.')">
-          <img src="images/Optical1stHeat.jpg" alt="Optical microscopy showing loss of birefringence in degradable polymer on first heating" loading="lazy" />
+          <img src="images/Optical1stHeat.jpg" alt="Optical microscopy showing loss of birefringence on first heating" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Optical — First Heat Cycle</p>
             <p class="img-card-caption">Loss of birefringence tracks crystalline domain dissipation above Tm, corroborating DSC melt data.</p>
@@ -682,7 +698,7 @@
 
         <a class="img-card" href="images/Optical2ndHeat.jpg"
            onclick="openLightbox(event, 'images/Optical2ndHeat.jpg', 'Polarized optical microscopy — Degradable polymer under second heating cycle. Maintained phase separation after initial melt and an elevated Tm on reheat indicate material annealing, with crystalline domains reorganizing into a more thermodynamically stable configuration.')">
-          <img src="images/Optical2ndHeat.jpg" alt="Optical microscopy of degradable polymer on second heating showing maintained phase separation and elevated Tm" loading="lazy" />
+          <img src="images/Optical2ndHeat.jpg" alt="Optical microscopy on second heating showing maintained phase separation" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Optical — Second Heat Cycle</p>
             <p class="img-card-caption">Maintained phase separation and elevated Tm on reheat indicate annealing-driven reorganization of crystalline domains.</p>
@@ -691,7 +707,7 @@
 
         <a class="img-card" href="images/HeatedStageOptical.png"
            onclick="openLightbox(event, 'images/HeatedStageOptical.png', 'Custom-built heated optical stage. A variable autotransformer paired with ceramic thermostatic heating elements provides precise, stable temperature control for in situ polarized light microscopy during polymer melt and recrystallization studies.')">
-          <img src="images/HeatedStageOptical.png" alt="Custom heated stage built for optical microscopy using autotransformer and ceramic heating elements" loading="lazy" />
+          <img src="images/HeatedStageOptical.png" alt="Custom heated stage for optical microscopy" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Custom Heated Stage</p>
             <p class="img-card-caption">Variable autotransformer and ceramic heating elements enabling precise in situ thermal microscopy.</p>
@@ -700,7 +716,7 @@
 
         <a class="img-card" href="images/SurfaceContamination.jpg"
            onclick="openLightbox(event, 'images/SurfaceContamination.jpg', 'Optical microscopy with thermal stage — Surface contamination in degradable polymers. Images captured at melt onset reveal the presence and distribution of surface contaminants, providing insight into processing conditions and material purity.')">
-          <img src="images/SurfaceContamination.jpg" alt="Optical microscopy images showing surface contamination in degradable polymers at melt" loading="lazy" />
+          <img src="images/SurfaceContamination.jpg" alt="Optical microscopy showing surface contamination at melt" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Optical — Surface Contamination</p>
             <p class="img-card-caption">Contamination identified at melt onset, informing processing conditions and purity assessment.</p>
@@ -710,7 +726,7 @@
         <!-- SEM -->
         <a class="img-card" href="images/AuNanoParticles100kx 15kVTTLSE.jpeg"
            onclick="openLightbox(event, 'images/AuNanoParticles100kx 15kVTTLSE.jpeg', 'SEM — Gold nanoparticles at 100,000x magnification, 15 kV, TTL secondary electron detector. High-resolution imaging resolves two adjacent nanoparticles and their contact geometry, with surface contrast revealing particle morphology at the nanoscale.')">
-          <img src="images/AuNanoParticles100kx 15kVTTLSE.jpeg" alt="SEM image of gold nanoparticles at 100kx magnification showing two attached particles" loading="lazy" />
+          <img src="images/AuNanoParticles100kx 15kVTTLSE.jpeg" alt="SEM image of gold nanoparticles at 100kx" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">SEM — Gold Nanoparticles</p>
             <p class="img-card-caption">100,000x TTL-SE imaging resolves contact geometry between adjacent Au nanoparticles at 15 kV.</p>
@@ -719,7 +735,7 @@
 
         <a class="img-card" href="images/butterflywing.jpeg"
            onclick="openLightbox(event, 'images/butterflywing.jpeg', 'SEM — Butterfly wing scales. Individual scales are resolved in a regular overlapping array, illustrating the hierarchical architecture that underpins both structural coloration and wing surface aerodynamics.')">
-          <img src="images/butterflywing.jpeg" alt="SEM image of butterfly wing showing individual scales" loading="lazy" />
+          <img src="images/butterflywing.jpeg" alt="SEM image of butterfly wing scales" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">SEM — Butterfly Wing Scales</p>
             <p class="img-card-caption">Hierarchical scale array underlying structural coloration and aerodynamic surface function.</p>
@@ -728,7 +744,7 @@
 
         <a class="img-card" href="images/butterflywing2.jpeg"
            onclick="openLightbox(event, 'images/butterflywing2.jpeg', 'SEM — Butterfly wing scales, high magnification. Close-up imaging reveals the fine surface microstructure of individual scales, including ridge and crossrib nanoarchitecture responsible for light interference and iridescence.')">
-          <img src="images/butterflywing2.jpeg" alt="SEM close-up of individual butterfly wing scales" loading="lazy" />
+          <img src="images/butterflywing2.jpeg" alt="SEM close-up of butterfly wing scale microstructure" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">SEM — Scale Microstructure</p>
             <p class="img-card-caption">Ridge and crossrib nanoarchitecture responsible for light interference and iridescent coloration.</p>
@@ -746,7 +762,7 @@
 
         <a class="img-card" href="images/GlitterSE60degBias1.jpeg"
            onclick="openLightbox(event, 'images/GlitterSE60degBias1.jpeg', 'SEM — Mineral sample, secondary electron detector, 60 degree stage tilt. Tilted geometry enhances surface topographic contrast and edge effects, improving three-dimensional visualization of particle faceting and surface texture.')">
-          <img src="images/GlitterSE60degBias1.jpeg" alt="SEM image at 60 degree stage tilt showing surface topographic contrast" loading="lazy" />
+          <img src="images/GlitterSE60degBias1.jpeg" alt="SEM image at 60 degree stage tilt" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">SEM — 60 Degree Stage Tilt</p>
             <p class="img-card-caption">Tilted geometry enhances topographic contrast and three-dimensional visualization of particle faceting.</p>
@@ -764,7 +780,7 @@
 
         <a class="img-card" href="images/SEMNoColor.jpeg"
            onclick="openLightbox(event, 'images/SEMNoColor.jpeg', 'SEM — Cactus spines and areolas, native grayscale. Unprocessed secondary electron image showing spine base geometry and areola surface morphology, providing the source image for colorization comparison.')">
-          <img src="images/SEMNoColor.jpeg" alt="Grayscale SEM image of cactus spines and areolas before colorization" loading="lazy" />
+          <img src="images/SEMNoColor.jpeg" alt="Grayscale SEM image of cactus spines before colorization" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">SEM — Cactus Spines (Grayscale)</p>
             <p class="img-card-caption">Native SE image of spine base geometry and areola morphology, source for false-color processing.</p>
@@ -773,7 +789,7 @@
 
         <a class="img-card" href="images/SEMSpine.jpeg"
            onclick="openLightbox(event, 'images/SEMSpine.jpeg', 'SEM — Cactus spine microstructure. Secondary electron imaging reveals the surface architecture of the spine shaft, including organized nodule arrays that influence mechanical interactions and attachment behavior.')">
-          <img src="images/SEMSpine.jpeg" alt="SEM image of cactus spine showing surface microstructure" loading="lazy" />
+          <img src="images/SEMSpine.jpeg" alt="SEM image of cactus spine microstructure" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">SEM — Spine Microstructure</p>
             <p class="img-card-caption">Organized nodule arrays along the spine shaft influencing mechanical and attachment behavior.</p>
@@ -803,7 +819,7 @@
 
         <a class="img-card" href="images/RheologyOverlay.png"
            onclick="openLightbox(event, 'images/RheologyOverlay.png', 'Rheology — Storage modulus overlay, degradable polymer series. Systematic variation in small molecule content produces a tunable range of storage moduli, directly correlating architectural control with viscoelastic stiffness across the compositional series.')">
-          <img src="images/RheologyOverlay.png" alt="Rheology overlay showing tunable storage modulus across degradable polymer compositions" loading="lazy" />
+          <img src="images/RheologyOverlay.png" alt="Rheology overlay showing tunable storage modulus" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Rheology Overlay</p>
             <p class="img-card-caption">Tunable storage modulus across compositions, linking small molecule content to viscoelastic stiffness.</p>
@@ -812,7 +828,7 @@
 
         <a class="img-card" href="images/RheologyHeatCycle.jpg"
            onclick="openLightbox(event, 'images/RheologyHeatCycle.jpg', 'Rheology — Thermal cycling, degradable polymer. Overlaid first and second heat cycles show storage modulus, loss modulus, and tan delta, revealing changes in viscoelastic response attributed to annealing and crystalline domain reorganization between cycles.')">
-          <img src="images/RheologyHeatCycle.jpg" alt="Rheology overlay of first and second heating cycles showing storage modulus, loss modulus, and tan delta" loading="lazy" />
+          <img src="images/RheologyHeatCycle.jpg" alt="Rheology overlay of first and second heating cycles" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Rheology — Heat Cycle</p>
             <p class="img-card-caption">G', G'', and tan delta across two heating cycles reveal annealing-driven shifts in viscoelastic response.</p>
@@ -821,7 +837,7 @@
 
         <a class="img-card" href="images/RheoThermalCycling.jpg"
            onclick="openLightbox(event, 'images/RheoThermalCycling.jpg', 'Rheology — Multi-cycle thermal stability, degradable polymer. Repeated heating and cooling cycles produce no measurable drift in viscoelastic properties, demonstrating thermal reversibility and consistent reprocessability of the material system.')">
-          <img src="images/RheoThermalCycling.jpg" alt="Rheology showing no viscoelastic changes across multiple thermal cycles" loading="lazy" />
+          <img src="images/RheoThermalCycling.jpg" alt="Rheology showing no viscoelastic changes across thermal cycles" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Rheology — Thermal Cycling</p>
             <p class="img-card-caption">No viscoelastic drift across repeated thermal cycles, confirming material reversibility and reprocessability.</p>
@@ -843,7 +859,7 @@
 
         <a class="img-card" href="images/XRDOverlay.png"
            onclick="openLightbox(event, 'images/XRDOverlay.png', 'XRD overlay — Degradable polymer series. Diffraction patterns show coexisting amorphous halos and sharp crystalline reflections whose relative intensities shift systematically with composition, confirming tunable degrees of crystallinity across the series.')">
-          <img src="images/XRDOverlay.png" alt="XRD overlay of degradable polymers showing tunable crystallinity" loading="lazy" />
+          <img src="images/XRDOverlay.png" alt="XRD overlay of degradable polymers" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">XRD Overlay</p>
             <p class="img-card-caption">Coexisting amorphous halos and crystalline reflections confirm tunable crystallinity across the polymer series.</p>
@@ -852,7 +868,7 @@
 
         <a class="img-card" href="images/HeatDegradedXRD.png"
            onclick="openLightbox(event, 'images/HeatDegradedXRD.png', 'XRD — Selective polymerization via thermal degradation. Diffraction patterns before and after volatile off-gassing show the emergence of crystalline reflections consistent with supramolecular polymer formation and long-range structural ordering.')">
-          <img src="images/HeatDegradedXRD.png" alt="XRD showing crystalline domain development after thermal degradation and off-gassing" loading="lazy" />
+          <img src="images/HeatDegradedXRD.png" alt="XRD showing crystalline domain development after off-gassing" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">XRD — Heat Degraded</p>
             <p class="img-card-caption">Emergence of crystalline reflections after volatile off-gassing confirms supramolecular polymer formation.</p>
@@ -883,7 +899,7 @@
 
         <a class="img-card" href="images/TensileOverlay.png"
            onclick="openLightbox(event, 'images/TensileOverlay.png', 'Uniaxial tensile — Degradable polymer series vs. commercial LDPE. Stress-strain overlays span brittle to elastomeric response, demonstrating the breadth of mechanical tunability achievable through architectural control and benchmarked against a commercial reference.')">
-          <img src="images/TensileOverlay.png" alt="Tensile overlay of degradable polymers from brittle to elastomeric compared with LDPE" loading="lazy" />
+          <img src="images/TensileOverlay.png" alt="Tensile overlay of degradable polymers vs LDPE" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Tensile Overlay</p>
             <p class="img-card-caption">Brittle-to-elastomeric range of tensile responses benchmarked against commercial LDPE.</p>
@@ -892,7 +908,7 @@
 
         <a class="img-card" href="images/VariableAndReprocessedTensile.png"
            onclick="openLightbox(event, 'images/VariableAndReprocessedTensile.png', 'Uniaxial tensile — Variable strain rate and reprocessed specimen responses. Strain rate sensitivity and post-reprocessing mechanical retention are assessed, providing evidence for viscoelastic character and material recyclability without significant property loss.')">
-          <img src="images/VariableAndReprocessedTensile.png" alt="Tensile responses showing variable strain rate and reprocessed specimen behavior" loading="lazy" />
+          <img src="images/VariableAndReprocessedTensile.png" alt="Tensile responses showing variable strain rate and reprocessed specimens" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Variable and Reprocessed Tensile</p>
             <p class="img-card-caption">Strain rate sensitivity and post-reprocessing mechanical retention demonstrate viscoelastic character and recyclability.</p>
@@ -901,7 +917,7 @@
 
         <a class="img-card" href="images/LapShearOverlay.jpg"
            onclick="openLightbox(event, 'images/LapShearOverlay.jpg', 'Lap shear — Degradable polymer adhesives, heated-bond and pressure-bond configurations vs. cyanoacrylate and commercial tape. Overlay quantifies adhesive performance across bonding methods and benchmarks degradable systems against established commercial adhesives.')">
-          <img src="images/LapShearOverlay.jpg" alt="Lap shear overlay comparing heated-bonded and pressure-bonded adhesives with commercial references" loading="lazy" />
+          <img src="images/LapShearOverlay.jpg" alt="Lap shear overlay comparing bonding methods with commercial adhesives" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Lap Shear Overlay</p>
             <p class="img-card-caption">Heated-bond and pressure-bond performance benchmarked against cyanoacrylate and commercial tape.</p>
@@ -910,7 +926,7 @@
 
         <a class="img-card" href="images/LapShearFailures.png"
            onclick="openLightbox(event, 'images/LapShearFailures.png', 'Lap shear — Failure mode documentation. Post-test joint photographs show adhesive, cohesive, and mixed failure modes across specimen compositions, providing qualitative insight into interfacial adhesion strength relative to bulk material cohesion.')">
-          <img src="images/LapShearFailures.png" alt="Lap shear joint failure modes across adhesive samples" loading="lazy" />
+          <img src="images/LapShearFailures.png" alt="Lap shear joint failure modes" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Lap Shear Failures</p>
             <p class="img-card-caption">Adhesive, cohesive, and mixed failure modes across compositions informing interfacial vs. bulk strength.</p>
@@ -919,7 +935,7 @@
 
         <a class="img-card" href="images/LapShearFailureModes.png"
            onclick="openLightbox(event, 'images/LapShearFailureModes.png', 'Lap shear failure mode diagram. Schematic illustrating adhesive, cohesive, and substrate failure classifications used to interpret experimental joint fracture, providing a reference framework for failure mode assignment across all tested specimens.')">
-          <img src="images/LapShearFailureModes.png" alt="Diagram illustrating lap shear failure mode classifications" loading="lazy" />
+          <img src="images/LapShearFailureModes.png" alt="Diagram of lap shear failure mode classifications" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Lap Shear Failure Modes</p>
             <p class="img-card-caption">Schematic reference for adhesive, cohesive, and substrate failure classification in lap joint testing.</p>
@@ -928,7 +944,7 @@
 
         <a class="img-card" href="images/TensileProperties.png"
            onclick="openLightbox(event, 'images/TensileProperties.png', 'Tensile property diagram. Reference schematic illustrating classes of stress-strain behavior and defining characterizable parameters including yield point, ultimate tensile strength, and elongation at break for ductile materials.')">
-          <img src="images/TensileProperties.png" alt="Diagram showing classes of tensile responses and characterizable behavior" loading="lazy" />
+          <img src="images/TensileProperties.png" alt="Diagram of tensile property classes" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Tensile Property Classes</p>
             <p class="img-card-caption">Reference schematic defining brittle, ductile, and elastomeric stress-strain behavior and key characterizable parameters.</p>
@@ -950,7 +966,7 @@
 
         <a class="img-card" href="images/IROverlay.png"
            onclick="openLightbox(event, 'images/IROverlay.png', 'FTIR — Supramolecular polymer overlaid with precursor components. Wavenumber shifts in select peaks upon supramolecular formation confirm successful non-covalent assembly and identify the spectroscopic signatures of binding interactions between polymer components.')">
-          <img src="images/IROverlay.png" alt="FTIR overlay of supramolecular polymer and precursor components showing wavenumber shifts" loading="lazy" />
+          <img src="images/IROverlay.png" alt="FTIR overlay of supramolecular polymer and precursors" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">FTIR Overlay</p>
             <p class="img-card-caption">Wavenumber shifts upon supramolecular formation confirm non-covalent assembly and identify binding signatures.</p>
@@ -959,7 +975,7 @@
 
         <a class="img-card" href="images/IRBindingComparison.jpg"
            onclick="openLightbox(event, 'images/IRBindingComparison.jpg', 'FTIR — Binding strength comparison across small molecule series. Peak wavenumber shifts are correlated with binding affinity, enabling rank-ordering of non-covalent interaction strengths and informing small molecule selection for architectural control.')">
-          <img src="images/IRBindingComparison.jpg" alt="FTIR comparison of small molecule binding strengths shown through wavenumber shifts" loading="lazy" />
+          <img src="images/IRBindingComparison.jpg" alt="FTIR comparison of small molecule binding strengths" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">FTIR — Binding Comparison</p>
             <p class="img-card-caption">Wavenumber shifts correlated with binding affinity, enabling rank-ordering of non-covalent interaction strengths.</p>
@@ -968,7 +984,7 @@
 
         <a class="img-card" href="images/NMROverlay.jpg"
            onclick="openLightbox(event, 'images/NMROverlay.jpg', 'NMR — Supramolecular polymer component overlay. Assigned chemical shifts and integration values confirm structural identity of each component; shifts relative to starting materials provide direct spectroscopic evidence of non-covalent binding in solution.')">
-          <img src="images/NMROverlay.jpg" alt="NMR overlay of supramolecular polymer components with assigned chemical shifts" loading="lazy" />
+          <img src="images/NMROverlay.jpg" alt="NMR overlay of supramolecular polymer components" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">NMR Overlay</p>
             <p class="img-card-caption">Assigned shifts and integration values confirm component identity; shifts from starting materials evidence supramolecular binding.</p>
@@ -977,7 +993,7 @@
 
         <a class="img-card" href="images/NMRTitrations.png"
            onclick="openLightbox(event, 'images/NMRTitrations.png', 'NMR titration — Small molecule binding onset. Sequential addition of one component to another tracks the evolution from triplet to quartet multiplicity in a monitored peak, providing spectroscopic confirmation of supramolecular complex formation and binding stoichiometry onset.')">
-          <img src="images/NMRTitrations.png" alt="NMR titration showing chemical shift change from triplet to quartet upon supramolecular binding" loading="lazy" />
+          <img src="images/NMRTitrations.png" alt="NMR titration showing triplet to quartet evolution" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">NMR Titrations</p>
             <p class="img-card-caption">Triplet-to-quartet evolution tracks binding onset and confirms supramolecular complex formation in solution.</p>
@@ -986,7 +1002,7 @@
 
         <a class="img-card" href="images/NMRTitrations2.jpg"
            onclick="openLightbox(event, 'images/NMRTitrations2.jpg', 'NMR titration — Binding stoichiometry determination. Chemical shift plotted against molar equivalency yields two linear regimes whose intersection defines the binding stoichiometry of the small molecule pair, providing quantitative characterization of supramolecular assembly.')">
-          <img src="images/NMRTitrations2.jpg" alt="NMR titration graph of chemical shift vs equivalency showing binding stoichiometry intersection" loading="lazy" />
+          <img src="images/NMRTitrations2.jpg" alt="NMR titration graph showing binding stoichiometry" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">NMR Titrations — Stoichiometry</p>
             <p class="img-card-caption">Intersection of two linear regimes in chemical shift vs. equivalency defines small molecule binding stoichiometry.</p>
@@ -1021,39 +1037,41 @@
   <!-- ABOUT -->
   <section class="section" id="about">
     <p class="section-eyebrow">About</p>
-    <p class="bio-body">
-      I am drawn to work where materials decisions carry real consequences, where the gap between
-      a good solution and a poor one is measured in performance, safety, or longevity. My research
-      has centered on designing degradable polymer systems with tunable architecture, using
-      characterization as a tool for iterative problem solving rather than just confirmation. I am
-      most energized by complex, open-ended challenges that require reasoning carefully from first
-      principles and refining toward a purpose-built answer. Open to roles in materials science and
-      engineering, polymer science, R&D, and applications science in the Pacific Northwest and beyond.
-    </p>
-    <div class="bio-grid">
-      <div class="bio-card">
-        <p class="bio-card-label">Degree</p>
-        <p class="bio-card-value">M.S. Chemistry<br>Materials Science focus</p>
-      </div>
-      <div class="bio-card">
-        <p class="bio-card-label">Experience</p>
-        <p class="bio-card-value">4+ years polymer research</p>
-      </div>
-      <div class="bio-card">
-        <p class="bio-card-label">Specialization</p>
-        <p class="bio-card-value">Polymer design and degradation characterization</p>
-      </div>
-      <div class="bio-card">
-        <p class="bio-card-label">Recognition</p>
-        <p class="bio-card-value">ACS Best Poster (Graduate), PMSE · Outstanding Graduate 2025/2026</p>
-      </div>
-      <div class="bio-card">
-        <p class="bio-card-label">Sectors of interest</p>
-        <p class="bio-card-value">Aerospace · Space · Energy · R&D</p>
-      </div>
-      <div class="bio-card">
-        <p class="bio-card-label">Location</p>
-        <p class="bio-card-value">Pacific Northwest</p>
+    <div class="about-layout">
+      <p class="bio-body">
+        I am drawn to work where materials decisions carry real consequences, where the gap between
+        a good solution and a poor one is measured in performance, safety, or longevity. My research
+        has centered on designing degradable polymer systems with tunable architecture, using
+        characterization as a tool for iterative problem solving rather than just confirmation. I am
+        most energized by complex, open-ended challenges that require reasoning carefully from first
+        principles and refining toward a purpose-built answer. Open to roles in materials science and
+        engineering, polymer science, R&D, and applications science in the Pacific Northwest and beyond.
+      </p>
+      <div class="bio-grid">
+        <div class="bio-card">
+          <p class="bio-card-label">Degree</p>
+          <p class="bio-card-value">M.S. Chemistry<br>Materials Science focus</p>
+        </div>
+        <div class="bio-card">
+          <p class="bio-card-label">Experience</p>
+          <p class="bio-card-value">4+ years polymer research</p>
+        </div>
+        <div class="bio-card">
+          <p class="bio-card-label">Specialization</p>
+          <p class="bio-card-value">Polymer design and material characterization</p>
+        </div>
+        <div class="bio-card">
+          <p class="bio-card-label">Recognition</p>
+          <p class="bio-card-value">ACS Best Poster (Graduate), PMSE · Outstanding Graduate 2025/2026</p>
+        </div>
+        <div class="bio-card">
+          <p class="bio-card-label">Sectors of interest</p>
+          <p class="bio-card-value">Aerospace · Space · Energy · R&D</p>
+        </div>
+        <div class="bio-card">
+          <p class="bio-card-label">Location</p>
+          <p class="bio-card-value">Pacific Northwest</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1068,7 +1086,7 @@
         <div class="contact-icon">
           <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
-        <div>
+        <div class="contact-text">
           <p class="contact-card-label">Email</p>
           <p class="contact-card-sub">olivervenablerose@gmail.com</p>
         </div>
@@ -1077,7 +1095,7 @@
         <div class="contact-icon">
           <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         </div>
-        <div>
+        <div class="contact-text">
           <p class="contact-card-label">LinkedIn</p>
           <p class="contact-card-sub">oliver-venablerose</p>
         </div>
@@ -1102,7 +1120,6 @@
   </div>
 
   <script>
-    // Lightbox
     function openLightbox(e, src, caption) {
       e.preventDefault();
       document.getElementById('lightbox-img').src = src;
