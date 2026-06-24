@@ -173,6 +173,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      margin-bottom: 1rem;
     }
 
     .badge {
@@ -186,6 +187,15 @@
       border-radius: 20px;
       letter-spacing: 0.04em;
       opacity: 0.9;
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      opacity: 0.8;
     }
 
     /* ── SECTION SHARED ── */
@@ -230,7 +240,6 @@
       transform: translateY(0);
     }
 
-    /* Stagger delays for grid children */
     .fade-up[data-delay="1"] { transition-delay: 0.06s; }
     .fade-up[data-delay="2"] { transition-delay: 0.12s; }
     .fade-up[data-delay="3"] { transition-delay: 0.18s; }
@@ -242,7 +251,6 @@
     .fade-up[data-delay="9"] { transition-delay: 0.18s; }
     .fade-up[data-delay="10"] { transition-delay: 0.24s; }
 
-    /* Technique block: slide in from slight left */
     .technique-block {
       margin-bottom: 3.5rem;
       opacity: 0;
@@ -260,7 +268,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.5rem;
     }
 
     .technique-name {
@@ -297,6 +305,17 @@
       color: var(--text-muted);
     }
 
+    /* ── TECHNIQUE SUBTITLE ── */
+    .technique-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 1.25rem;
+      opacity: 0.8;
+      letter-spacing: 0.02em;
+    }
+
     .img-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -322,7 +341,6 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
 
-    /* Don't fight fade-up transform with card hover — only apply hover translate when visible */
     .img-card.visible:hover {
       transform: translateY(-3px);
     }
@@ -357,6 +375,94 @@
       line-height: 1.55;
     }
 
+    /* ── POSTER CARD ── */
+    .poster-card {
+      background: var(--bg2);
+      border: 0.5px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .poster-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .poster-card.visible:hover {
+      transform: translateY(-3px);
+    }
+
+    .poster-preview {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--bg3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-shrink: 0;
+      border-bottom: 0.5px solid rgba(255,255,255,0.06);
+    }
+
+    .poster-preview svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.6;
+    }
+
+    .poster-preview-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      opacity: 0.6;
+    }
+
+    .poster-card-body {
+      background: var(--bg2);
+      padding: 10px 12px 12px;
+      flex: 1;
+    }
+
+    .poster-card-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .poster-card-title svg {
+      width: 11px;
+      height: 11px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    .poster-card-caption {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
     /* ── LIGHTBOX ── */
     .lightbox {
       display: none;
@@ -371,13 +477,8 @@
       transition: opacity 0.2s ease;
     }
 
-    .lightbox.open {
-      display: flex;
-    }
-
-    .lightbox.open.shown {
-      opacity: 1;
-    }
+    .lightbox.open { display: flex; }
+    .lightbox.open.shown { opacity: 1; }
 
     .lightbox-inner {
       max-width: 860px;
@@ -391,9 +492,7 @@
       transition: transform 0.2s ease;
     }
 
-    .lightbox.open.shown .lightbox-inner {
-      transform: scale(1);
-    }
+    .lightbox.open.shown .lightbox-inner { transform: scale(1); }
 
     .lightbox-inner img {
       width: 100%;
@@ -620,131 +719,51 @@
       opacity: 0.4;
     }
 
-    /* ────────────────────────────────────────
-       RESPONSIVE — TABLET (max 900px)
-    ──────────────────────────────────────── */
+    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .about-layout {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .img-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      }
+      .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .img-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
     }
 
-    /* ────────────────────────────────────────
-       RESPONSIVE — MOBILE (max 640px)
-    ──────────────────────────────────────── */
     @media (max-width: 640px) {
-
-      nav {
-        padding: 0 1.25rem;
-        flex-wrap: wrap;
-        height: auto;
-        min-height: 52px;
-      }
-
-      .nav-name {
-        font-size: 12px;
-        padding: 0.85rem 0;
-      }
-
-      .nav-toggle {
-        display: flex;
-        padding: 0.85rem 0;
-      }
-
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
-        border-top: 0.5px solid var(--border);
-        padding: 0.5rem 0 0.75rem;
-      }
-
+      nav { padding: 0 1.25rem; flex-wrap: wrap; height: auto; min-height: 52px; }
+      .nav-name { font-size: 12px; padding: 0.85rem 0; }
+      .nav-toggle { display: flex; padding: 0.85rem 0; }
+      .nav-links { display: none; flex-direction: column; gap: 0; width: 100%; border-top: 0.5px solid var(--border); padding: 0.5rem 0 0.75rem; }
       .nav-links.open { display: flex; }
-
-      .nav-links li a {
-        display: block;
-        padding: 0.6rem 0;
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-
-      .hero {
-        padding: 3rem 1.25rem 2.5rem;
-      }
-
+      .nav-links li a { display: block; padding: 0.6rem 0; font-size: 13px; color: var(--text-muted); }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
       .hero-eyebrow { font-size: 11px; }
       .hero-eyebrow-sub { font-size: 10px; letter-spacing: 0.07em; }
-
-      .hero h1 {
-        font-size: clamp(28px, 8vw, 40px);
-      }
-
+      .hero h1 { font-size: clamp(28px, 8vw, 40px); }
       .hero-bio { font-size: 14px; }
-
       .badge-row { gap: 6px; }
       .badge { font-size: 10px; padding: 4px 10px; }
-
-      .section {
-        padding: 2.5rem 1.25rem;
-      }
-
+      .section { padding: 2.5rem 1.25rem; }
       .section-rule { margin: 0 1.25rem; }
-
       .section-eyebrow { font-size: 11px; margin-bottom: 1.75rem; }
-
       .technique-name { font-size: 13px; }
       .technique-abbr { font-size: 11px; }
       .technique-count { font-size: 11px; }
-
-      .img-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-      }
-
+      .img-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
       .img-card-title { font-size: 11px; }
       .img-card-caption { font-size: 10.5px; }
-
       .pub-card { padding: 1.25rem; }
       .pub-title { font-size: 14px; }
       .pub-authors { font-size: 12px; }
-
-      .bio-grid {
-        grid-template-columns: 1fr;
-      }
-
+      .bio-grid { grid-template-columns: 1fr; }
       .bio-body { font-size: 14px; }
       .bio-card { padding: 1rem 1.25rem; }
-
-      .contact-grid {
-        grid-template-columns: 1fr;
-        max-width: 100%;
-      }
-
+      .contact-grid { grid-template-columns: 1fr; max-width: 100%; }
       .lightbox { padding: 0.75rem; }
       .lightbox-inner { padding: 1rem; border-radius: var(--radius); }
       .lightbox-inner img { max-height: 50vh; }
       .lightbox-caption { font-size: 12px; }
       .lightbox-close { top: 0.75rem; right: 0.75rem; width: 32px; height: 32px; font-size: 16px; }
-
-      footer {
-        padding: 1.25rem;
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-      }
-
+      footer { padding: 1.25rem; flex-direction: column; gap: 0.5rem; text-align: center; }
       .footer-dot { display: none; }
     }
 
-    /* ────────────────────────────────────────
-       REDUCED MOTION
-    ──────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
       .img-card, .contact-card, .pub-card, .bio-card { transition: none; }
       .section-eyebrow { opacity: 0.7; transform: none; transition: none; }
@@ -761,9 +780,7 @@
   <nav id="main-nav">
     <span class="nav-name">Oliver Venablerose, M.S.</span>
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="nav-links">
       <li><a href="#gallery" onclick="closeNav()">Gallery</a></li>
@@ -777,12 +794,12 @@
   <header class="hero">
     <div class="hero-glow" id="hero-glow"></div>
     <p class="hero-eyebrow">Materials Scientist</p>
-    <p class="hero-eyebrow-sub">Polymer Development · Characterization · Failure Analysis</p>
+    <p class="hero-eyebrow-sub">Polymer Development · Method Development · Characterization · Failure Analysis</p>
     <h1>Characterization<br>through <em>careful</em> science.</h1>
     <p class="hero-bio">
       <em>M.S. Chemistry</em>, <em>materials science focus</em>, with 4+ years in polymer development and multi-technique
       materials characterization, degradation and failure analysis. <em>First-author</em> in the Journal of
-      Polymer Science. <em>National ACS Best Poster Award</em> (Graduate Researcher), Polymeric Materials: Science & Engineering (PMSE) Division · <em>Outstanding Graduate</em> 2025/2026.
+      Polymer Science. <em>National ACS Best Poster Award</em> (Graduate Researcher), Polymeric Materials: Science &amp; Engineering (PMSE) Division · <em>Outstanding Graduate</em> 2025/2026.
     </p>
     <div class="badge-row">
       <span class="badge">DSC · TGA</span>
@@ -792,6 +809,7 @@
       <span class="badge">XRD</span>
       <span class="badge">UTM · ASTM</span>
     </div>
+    <p class="stats-row">20 material systems &nbsp;·&nbsp; 200+ test iterations &nbsp;·&nbsp; 9+ researchers trained</p>
   </header>
 
   <div class="section-rule"></div>
@@ -799,6 +817,42 @@
   <!-- GALLERY -->
   <section class="section" id="gallery">
     <p class="section-eyebrow">Characterization gallery</p>
+
+    <!-- POLYMER DESIGN -->
+    <div class="technique-block">
+      <div class="technique-header">
+        <span class="technique-name">Polymer design</span>
+        <span class="technique-abbr">Architectural Control</span>
+        <div class="technique-rule"></div>
+        <span class="technique-count">2 images</span>
+      </div>
+      <div class="img-grid">
+
+        <a class="img-card fade-up" data-delay="1" href="images/ArchitecturalCotnrolDegradablePolymers.png"
+           onclick="openLightbox(event, 'images/ArchitecturalCotnrolDegradablePolymers.png', 'Architectural control in degradable polymer systems. Systematic variation of oxyacid components within a bis(guanidine) framework enables tunable phase separation and mixed morphology outcomes. Small molecule architecture directly governs the balance between amorphous and crystalline domains, producing a compositional series with predictable and designable thermal and mechanical behavior.')">
+          <img src="images/ArchitecturalCotnrolDegradablePolymers.png" alt="Diagram showing architectural control of molecular components resulting in phase separated mixed morphology materials" loading="lazy" />
+          <div class="img-card-body">
+            <p class="img-card-title">Architectural Control — Phase Separation</p>
+            <p class="img-card-caption">Systematic variation of molecular components as a design lever for morphological tunability in degradable polymer systems.</p>
+          </div>
+        </a>
+
+        <a class="poster-card fade-up" data-delay="2" href="images/M.S.ThesisPoster.pdf" target="_blank" rel="noopener">
+          <div class="poster-preview">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span class="poster-preview-label">VIEW POSTER</span>
+          </div>
+          <div class="poster-card-body">
+            <p class="poster-card-title">
+              ACS Best Poster Award
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </p>
+            <p class="poster-card-caption">National recognition at the Polymeric Materials: Science &amp; Engineering (PMSE) Division, American Chemical Society National Meeting, Atlanta, GA · Spring 2026.</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
 
     <!-- THERMAL ANALYSIS -->
     <div class="technique-block">
@@ -848,6 +902,7 @@
         <div class="technique-rule"></div>
         <span class="technique-count">17 images</span>
       </div>
+      <p class="technique-subtitle">SEM images acquired through dedicated coursework spanning a broad range of material types, imaging conditions, and detector configurations.</p>
       <div class="img-grid">
 
         <a class="img-card fade-up" data-delay="1" href="images/AFMCrystallineDonuts.jpg"
@@ -905,11 +960,11 @@
         </a>
 
         <a class="img-card fade-up" data-delay="7" href="images/HeatedStageOptical.png"
-           onclick="openLightbox(event, 'images/HeatedStageOptical.png', 'Custom-built heated optical stage. A variable autotransformer paired with ceramic thermostatic heating elements provides precise, stable temperature control for in situ polarized light microscopy during polymer melt and recrystallization studies.')">
+           onclick="openLightbox(event, 'images/HeatedStageOptical.png', 'Custom-built heated optical stage. A variable autotransformer paired with ceramic thermostatic heating elements provides precise, stable temperature control for in situ polarized light microscopy during polymer melt and recrystallization studies. Designed and assembled in-house to enable temperature-controlled polarized light microscopy when no commercial stage was available for the application.')">
           <img src="images/HeatedStageOptical.png" alt="Custom heated stage for optical microscopy" loading="lazy" />
           <div class="img-card-body">
             <p class="img-card-title">Custom Heated Stage</p>
-            <p class="img-card-caption">Variable autotransformer and ceramic heating elements enabling precise in situ thermal microscopy.</p>
+            <p class="img-card-caption">Variable autotransformer and ceramic heating elements enabling precise in situ thermal microscopy. Designed and assembled in-house when no commercial stage was available for the application.</p>
           </div>
         </a>
 
@@ -1265,7 +1320,7 @@
         </div>
         <div class="bio-card fade-up" data-delay="5">
           <p class="bio-card-label">Sectors of interest</p>
-          <p class="bio-card-value">Aerospace · Space · Energy · R&D</p>
+          <p class="bio-card-value">Aerospace · Space · Energy · R&amp;D</p>
         </div>
         <div class="bio-card fade-up" data-delay="6">
           <p class="bio-card-label">Location</p>
@@ -1319,7 +1374,6 @@
   </div>
 
   <script>
-    // ── LIGHTBOX ──
     function openLightbox(e, src, caption) {
       e.preventDefault();
       const lb = document.getElementById('lightbox');
@@ -1328,17 +1382,13 @@
       document.getElementById('lightbox-caption').textContent = caption;
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
-      // Trigger transition on next frame
       requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add('shown')));
     }
 
     function closeLightbox() {
       const lb = document.getElementById('lightbox');
       lb.classList.remove('shown');
-      setTimeout(() => {
-        lb.classList.remove('open');
-        document.body.style.overflow = '';
-      }, 200);
+      setTimeout(() => { lb.classList.remove('open'); document.body.style.overflow = ''; }, 200);
     }
 
     document.getElementById('lightbox').addEventListener('click', function(e) {
@@ -1349,7 +1399,6 @@
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // ── HAMBURGER NAV ──
     const navToggle = document.getElementById('nav-toggle');
     const navLinks = document.getElementById('nav-links');
 
@@ -1365,59 +1414,28 @@
       navToggle.setAttribute('aria-expanded', false);
     }
 
-    // ── SCROLL-IN: section eyebrows ──
     const eyebrows = document.querySelectorAll('.section-eyebrow');
     const eyebrowObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          eyebrowObserver.unobserve(entry.target);
-        }
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); eyebrowObserver.unobserve(entry.target); } });
     }, { threshold: 0.2 });
     eyebrows.forEach(el => eyebrowObserver.observe(el));
 
-    // ── SCROLL-IN: technique blocks (slide from left) ──
     const techniqueBlocks = document.querySelectorAll('.technique-block');
     const blockObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          blockObserver.unobserve(entry.target);
-        }
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); blockObserver.unobserve(entry.target); } });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     techniqueBlocks.forEach(el => blockObserver.observe(el));
 
-    // ── SCROLL-IN: cards and other fade-up elements ──
     const fadeEls = document.querySelectorAll('.fade-up');
     const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          fadeObserver.unobserve(entry.target);
-        }
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); fadeObserver.unobserve(entry.target); } });
     }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
     fadeEls.forEach(el => fadeObserver.observe(el));
 
-    // ── PARALLAX: hero glow follows scroll subtly ──
     const heroGlow = document.getElementById('hero-glow');
     let ticking = false;
-
-    function updateParallax() {
-      const scrollY = window.scrollY;
-      // Glow drifts upward at 40% of scroll speed — creates gentle depth
-      heroGlow.style.transform = `translateY(${scrollY * 0.4}px)`;
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
-    }, { passive: true });
+    function updateParallax() { heroGlow.style.transform = `translateY(${window.scrollY * 0.4}px)`; ticking = false; }
+    window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; } }, { passive: true });
   </script>
 
 </body>
